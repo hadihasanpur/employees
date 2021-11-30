@@ -38,10 +38,10 @@
                 <table class="table"  wire:loading.remove>
                     <thead>
                     <tr>
-                        <th scope="col">#Id</th>
+                        <th scope="col">#Id     </th>
                         <th scope="col">Username</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Manage</th>
+                        <th scope="col">Email   </th>
+                        <th scope="col">Manage  </th>
                     </tr>
                     </thead>
                     <tbody>
