@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="col" wire:loading>
                                     <div class="spinner-border text-primary" role="status">
-                                        <span class="visually-hidden">Loading...</span>
+                                        <span class="sr-only">Loading...</span>
                                     </div>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table">
+                <table class="table"  wire:loading.remove>
                     <thead>
                     <tr>
                         <th scope="col">#Id</th>
@@ -45,7 +45,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($users as $user)
+                    @forelse()
+                    @forelse ($users as $user)
                         <tr>
                             <th scope="row">{{ $user->id }}</th>
                             <td>{{ $user->username }}</td>
@@ -54,7 +55,12 @@
                                 <a href="{{--{{ route('users.edit', $user->id) }}--}}" class="btn btn-success">Edit</a>
                             </td>
                         </tr>
-                    @endforeach
+                        @empty
+                        <tr>
+                            <th> No results</th>
+                        </tr>
+                    @endforelse
+
                     </tbody>
                 </table>
             </div>
