@@ -18,10 +18,10 @@
                         <form method="GET" action="{{ route('users.index') }}">
                             <div class="form-row align-items-center">
                                 <div class="col">
-                                    <input type="search" wire:model="search" class="form-control mb-2" id="inlineFormInput"
+                                    <input type="search" wire:model.defer="search" class="form-control mb-2" id="inlineFormInput"
                                            placeholder="Jane Doe">
                                 </div>
-                                <div class="col" wire:loadiing>
+                                <div class="col" wire:loading>
                                     <div class="spinner-border text-primary" role="status">
                                         <span class="sr-only">Loading...</span>
                                     </div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table"  wire:loading.defer.remove>
+                <table class="table"  wire:loading.remove >
                     <thead>
                     <tr>
                         <th scope="col">#Id     </th>
@@ -101,7 +101,7 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="firstNa me" type="text"
+                                    <input id="firstName" type="text"
                                            class="form-control @error('name') is-invalid @enderror" wire:model.defer="firstName"
                                            value="{{ old('firstName') }}">
 
