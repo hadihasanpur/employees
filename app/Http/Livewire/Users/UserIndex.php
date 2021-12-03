@@ -6,28 +6,27 @@ use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
 
-
-
 class UserIndex extends Component
 {
     public $search='';
-    PUBLIC $username,$firstName,$lastName,$email,$password;
+    public $username,$firstName,$lastName,$email,$password;
     protected $rules = [
-        'username' => 'required',
+        'username'  => 'required',
         'firstName' => 'required',
-        'lastName' => 'required',
-        'password' => 'required',
-        'email' => 'required|email',
+        'lastName'  => 'required',
+        'password'  => 'required',
+        'email'     => 'required|email',
     ];
-    public function storeUser(){
+    public function storeUser()
+    {
         $this->validate();
+
         User::create([
-            'username'=> $this->username,
+            'username'  => $this->username,
             'first_name'=> $this->firstName,
             'last_name' => $this->lastName,
-            'email' => $this->email,
-            'password'=> Hash::make($this->password)
-
+            'password'  => Hash::make($this->password),
+            'email'     => $this->email,
         ]);
         $this->reset();
         $this->dispatchBrowserEvent('closeModal');
