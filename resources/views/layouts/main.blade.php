@@ -57,8 +57,8 @@
                     <span>System Management</span>
                 </a>
                 <div id="collapseSystem" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="">Country</a>
+                    <div class="py-2 bg-white rounded collapse-inner">
+                        <a class="collapse-item" href="{{ route('country.index') }}">Country</a>
                         <a class="collapse-item" href="">State</a>
                         <a class="collapse-item" href="">Department</a>
                         <a class="collapse-item" href="">City</a>
@@ -76,7 +76,7 @@
                     <span>Users Management</span>
                 </a>
                 <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                    <div class="py-2 bg-white rounded collapse-inner">
                         <a class="collapse-item" href="{{route('users.index')}}">Users</a>
                         <a class="collapse-item" href="cards.html">Role</a>
                         <a class="collapse-item" href="cards.html">Permission</a>
@@ -93,30 +93,30 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="mb-4 bg-white shadow navbar navbar-expand navbar-light topbar static-top">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <button id="sidebarToggleTop" class="mr-3 btn btn-link d-md-none rounded-circle">
                         <i class="fa fa-bars"></i>
                     </button>
 
 
 
                     <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="ml-auto navbar-nav">
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
-                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->username }}</span>
+                                    class="mr-2 text-gray-600 d-none d-lg-inline small">{{ Auth::user()->username }}</span>
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            <div class="shadow dropdown-menu dropdown-menu-right animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    <i class="mr-2 text-gray-400 fas fa-sign-out-alt fa-sm fa-fw"></i>
                                     {{ __('Logout') }}
                                 </a>
 
@@ -141,9 +141,9 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
+                    <div class="my-auto text-center copyright">
                         <span>Copyright &copy; Your Website 2021</span>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
+    <a class="rounded scroll-to-top" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
@@ -172,13 +172,11 @@
     @stack('modals')
     @livewireScripts
     <script>
-        window.addEventListener('closeModal', event => {
-            $('#exampleModal').modal('hide')        })
-    </script>
-    <script>
-        window.addEventListener('showModal', event => {
-            $('#exampleModal').modal('show')        })
-    </script>
+        window.addEventListener('modal', event => {
+            $(event.detail.modalId).modal(event.detail.actionModal)        
+        })
+    </script> 
+    
 
 </body>
 

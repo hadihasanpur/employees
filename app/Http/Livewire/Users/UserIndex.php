@@ -5,11 +5,17 @@ namespace App\Http\Livewire\Users;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
+use Livewire\WithPagination;
+
 
 class UserIndex extends Component
 {
+    use WithPagination;
+        protected $paginationTheme = 'bootstrap';
+
     public $search='';
-    public $username,$firstName,$lastName,$email,$password ,$userId;
+    public $username,$firstName,$lastName,$email,$password ;
+    public $userId;
     public $editMode=false;
 
     protected $rules = [
@@ -22,14 +28,18 @@ class UserIndex extends Component
 
     public function showEditModal($id)
     {
-    $this->reset();
-    $this->editMode=true;
-    //find
-    $this->userId=$id;
-    //load
-    $this->loadUser();
-    //show
-    $this->dispatchBrowserEvent('showModal');
+        $this->reset();
+        $this->editMode=true;
+        //find
+        $this->userId=$id;
+        //load
+        $this->loadUser();
+        $this->dispatchBrowserEvent('modal', ['modalId' => '#usermodal', 'actionModal' => 'show']);
+    }
+    public function showUserModal()
+    {
+        $this->reset();
+        $this->dispatchBrowserEvent('modal', ['modalId' => '#usermodal', 'actionModal' => 'show']);
     }
 
     public function storeUser()
@@ -43,7 +53,7 @@ class UserIndex extends Component
             'email'     => $this->email,
         ]);
         $this->reset();
-        $this->dispatchBrowserEvent('closeModal');
+        $this->dispatchBrowserEvent('modal',['modalId'=>'#usermodal','actionModal'=>'hide']);
         session()->flash('user_message', 'Post successfully created.');
     }
 
@@ -58,7 +68,7 @@ class UserIndex extends Component
         $user=User::find($this->userId);
         $user->update($validated);
         $this->reset();
-        $this->dispatchBrowserEvent('closeModal');
+        $this->dispatchBrowserEvent('modal', ['modalId' => '#usermodal', 'actionModal' => 'hide']);
         session()->flash('user_message', 'Post successfully updated.');
     }
     public function deleteUser($id)
@@ -70,7 +80,7 @@ class UserIndex extends Component
 
     public function closeModal()
     {
-        $this->dispatchBrowserEvent('closeModal');
+        $this->dispatchBrowserEvent('modal', ['modalId' => '#usermodal', 'actionModal' => 'hide']);
     }
 
     public function loadUser()
@@ -85,10 +95,10 @@ class UserIndex extends Component
 
     public function render()
     {
-        $users = User::all();
+        $users = User::paginate(5);
         if(strlen($this->search) > 2){
 
-            $users= User::where('username', 'like', "%{$this->search}%")->get();
+            $users= User::where('username', 'like', "%{$this->search}%")->paginate(5);
         }
 
         return view('livewire.users.user-index',

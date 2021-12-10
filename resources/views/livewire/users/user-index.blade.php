@@ -1,10 +1,10 @@
 <div xmlns:wire="http://www.w3.org/1999/xhtml">
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Users</h1>
+    <div class="mb-4 d-sm-flex align-items-center justify-content-between">
+        <h1 class="mb-0 text-gray-800 h3">Users</h1>
     </div>
     <div class="row">
-        <div class="card  mx-auto">
+        <div class="mx-auto card">
             <div>
                 @if (session()->has('user_message'))
                     <div class="alert alert-success">
@@ -15,10 +15,10 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col">
-                        <form method="GET" action="{{ route('users.index') }}">
+                        <form>
                             <div class="form-row align-items-center">
                                 <div class="col">
-                                    <input type="search" wire:model.defer="search" class="form-control mb-2" id="inlineFormInput"
+                                    <input type="search" wire:model.defer="search" class="mb-2 form-control" id="inlineFormInput"
                                            placeholder="Jane Doe">
                                 </div>
                                 <div class="col" wire:loading>
@@ -31,7 +31,7 @@
                     </div>
                     <div>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        <button wire:click="showUserModal" class="btn btn-primary" data-toggle="modal">
                             Create user
                         </button>
                     </div>
@@ -69,13 +69,14 @@
                     </tbody>
                 </table>
             </div>
+            {{ $users->links() }}
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="usermodal" tabindex="-1" aria-labelledby="usermodalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="usermodalLabel">Modal title</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

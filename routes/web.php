@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Users\UserIndex;
+use App\Http\Livewire\Country\countryIndex;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,5 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::view('/dashboard','dashboard')->name('dashboard'); 
         Route::get('/users',UserIndex::class)->name('users.index'); 
+        Route::get('/countries',CountryIndex::class)->name('country.index');  
 });
