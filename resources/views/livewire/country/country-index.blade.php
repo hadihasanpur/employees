@@ -56,7 +56,7 @@
                             <td>
                                 <button wire:click="showEditModal({{$country->id}})"
                                         class="btn btn-success">Edit</button>
-                                <button wire:click="deleteUser({{$country->id}})"
+                                <button wire:click="deleteCountry({{$country->id}})"
                                         class="btn btn-danger">Delete</button>
                             </td>
                         </tr>

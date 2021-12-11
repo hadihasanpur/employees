@@ -15,8 +15,13 @@ class CountryIndex extends Component
     public $countryId;
 
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
 
+    protected $rules = [
+        'country_code'  => 'required',
+        'name'          => 'required',
+    ];
     public function showEditModal($id)
     {
         $this->reset();
@@ -24,13 +29,6 @@ class CountryIndex extends Component
         $this->loadCountries();
         $this->editMode=true;
         $this->dispatchBrowserEvent('modal', ['modalId' => '#countryModal', 'actionModal' => 'show']);    
-    }
-    public function loadCountries()
-    {
-        $country = Country::find($this->countryId);
-        $this->country_code = $country->country_code;
-        $this->country_code = $country->name;
-
     }
     public function showCountryModal()
     {
@@ -41,22 +39,49 @@ class CountryIndex extends Component
     public function closeModal()
     {
         $this->reset();
-        $this->dispatchBrowserEvent('modal', ['modalId' => '#countrymodal', 'actionModal' => 'hide']);
+        $this->dispatchBrowserEvent('modal', ['modalId' => '#countryModal', 'actionModal' => 'hide']);
     }
 
-    public function deleteMode($id)
+    public function storeCountry()
     {
-        //code
+        $this->validate();
+        Country::create([
+            'country_code'  => $this->country_code,
+            'name'=> $this->name,
+
+        ]);
+        $this->reset();
+        $this->dispatchBrowserEvent('modal',['modalId'=>'#countryModal','actionModal'=>'hide']);
+        session()->flash('country_message', 'A country successfully created.');
     }
-    
-    
+
     public function updateCountry()
     {
+        $validated = $this->validate([
+            'country_code'  => 'required',
+            'name' => 'required',
+        ]);
+        $country=Country::find($this->countryId);
+        $country->update($validated);
+        $this->reset();
+        $this->dispatchBrowserEvent('modal', ['modalId' => '#countryModal', 'actionModal' => 'hide']);
+        session()->flash('country_message', 'Country successfully updated.');
     }
-    public function storecountry()
+
+    public function deleteCountry($id)
     {
+        $country = Country::find($id);
+        $country->delete();
+        session()->flash('country_message', 'country successfully deleted.');
     }
-    
+
+    public function loadCountries()
+    {
+        $country = Country::find($this->countryId);
+        $this->country_code = $country->country_code;
+        $this->name = $country->name;
+    }
+
     public function render()
     {
         $countries = Country::paginate(5);
@@ -68,5 +93,5 @@ class CountryIndex extends Component
         ['countries' => $countries])
         ->layout('layouts.main');
     }
-    
+
 }
