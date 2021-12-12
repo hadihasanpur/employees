@@ -13,8 +13,10 @@ class Country extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'country_code',
-        'name',
-    ];
+    protected $fillable = ['country_code','name'];
+
+    public function states()
+    {
+        return $this->hasMany(State::class);
+    }
 }
