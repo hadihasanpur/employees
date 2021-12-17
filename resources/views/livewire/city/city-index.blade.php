@@ -1,14 +1,14 @@
 <div xmlns:wire="http://www.w3.org/1999/xhtml">
     <!-- Page Heading -->
     <div class="mb-4 d-sm-flex align-items-center justify-content-between">
-        <h1 class="mb-0 text-gray-800 h3">States</h1>
+        <h1 class="mb-0 text-gray-800 h3">Citys</h1>
     </div>
     <div class="row">
         <div class="mx-auto card">
             <div>
-                @if (session()->has('state_message'))
+                @if (session()->has('city_message'))
                     <div class="alert alert-success">
-                        {{ session('state_message') }}
+                        {{ session('city_message') }}
                     </div>
                 @endif
             </div>
@@ -31,8 +31,8 @@
                     </div>
                     <div>
                         <!-- Button trigger modal -->
-                        <button wire:click="showstateModal" class="btn btn-primary">
-                            Create State
+                        <button wire:click="showCityModal" class="btn btn-primary">
+                            Create City
                         </button>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
             <div class="card-body">
                 <table class="table"  wire:loading.remove >
                     <thead>
-                     <tr>
+                    <tr>
                         <th scope="col">#Id     </th>
                         <th scope="col">Country</th>
                         <th scope="col">Name   </th>
@@ -48,15 +48,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse ($states as $state)
+                    @forelse ($cities as $city)
                         <tr>
-                            <th scope="row">{{ $state->id }}</th>
-                            <td>{{ $state->country->name }}</td>
-                            <td>{{ $state->name }}</td>
+                            <th scope="row">{{ $city->id }}</th>
+                            <td>{{ $city->state->name }}</td>
+                            <td>{{ $city->name }}</td>
                             <td>
-                                <button wire:click="showEditModal({{$state->id}})"
+                                <button wire:click="showEditModal({{$city->id}})"
                                         class="btn btn-success">Edit</button>
-                                <button wire:click="deleteState({{$state->id}})"
+                                <button wire:click="deleteCity({{$city->id}})"
                                         class="btn btn-danger">Delete</button>
                             </td>
                         </tr>
@@ -69,17 +69,17 @@
                     </tbody>
                 </table>
             </div>
-            {{ $states->links() }}
+            {{ $cities->links() }}
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="stateModal" tabindex="-1" aria-labelledby="stateModalLabel" aria-hidden="true">
+        <div class="modal fade" id="cityModal" tabindex="-1" aria-labelledby="cityModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class ="modal-content">
                     <div class="modal-header">
                         @if ($editMode)
-                            <h5 class="modal-title" id="stateModalLabel">Edit State</h5>
+                            <h5 class="modal-title" id="cityModalLabel">Edit City</h5>
                         @else
-                            <h5 class="modal-title" id="stateModalLabel">Create State</h5>
+                            <h5 class="modal-title" id="cityModalLabel">Create City</h5>
                         @endif
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -88,17 +88,17 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-group row">
-                                <label for="countryId"
+                                <label for="stateId"
                                        class="col-md-4 col-form-label text-md-right">{{ __('State Code') }}</label>
 
                                 <div class="col-md-6">
-                                    <select wire:model.defer="countryId" class="custom-select custom-select-lg mb-3">
+                                    <select wire:model.defer="stateId" class="custom-select custom-select-lg mb-3">
                                         <option selected>choose</option>
-                                        @foreach(\App\Models\Country::all() as $country)
-                                            <option value="{{$country->id}}">{{$country->name}}</option>
+                                        @foreach(\App\Models\State::all() as $state)
+                                            <option value="{{$state->id}}">{{$state->name}}</option>
                                         @endforeach
                                     </select>
-                                    @error('countryId')
+                                    @error('stateId')
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -126,9 +126,9 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         @if($editMode)
-                            <button type="button" class="btn btn-primary" wire:click="updateState()">Update Country</button>
+                            <button type="button" class="btn btn-primary" wire:click="updateCity()">Update Country</button>
                         @else
-                            <button type="button" class="btn btn-primary" wire:click="storeState()">Store Country</button>
+                            <button type="button" class="btn btn-primary" wire:click="storeCity()">Store Country</button>
 
                         @endif
 

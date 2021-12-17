@@ -60,8 +60,8 @@
                     <div class="py-2 bg-white rounded collapse-inner">
                         <a class="collapse-item" href="{{ route('country.index') }}">Country</a>
                         <a class="collapse-item" href="{{ route('state.index')   }}">State</a>
-                        <a class="collapse-item" href="">Department</a>
-                        <a class="collapse-item" href="">City</a>
+                        <a class="collapse-item" href="{{ route('department.index')   }}">Department</a>
+                        <a class="collapse-item" href="{{ route('city.index') }}">City</a>
                     </div>
                 </div>
             </li>

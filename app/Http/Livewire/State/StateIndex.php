@@ -19,7 +19,6 @@ class StateIndex extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-
     protected $rules = [
         'countryId'  => 'required',
         'name'          => 'required',
@@ -46,7 +45,6 @@ class StateIndex extends Component
         $this->reset();
         $this->dispatchBrowserEvent('modal', ['modalId' => '#stateModal', 'actionModal' => 'show']);
     }
-
     public function closeModal()
     {
         $this->reset();
