@@ -42,8 +42,10 @@
                     <thead>
                         <tr>
                             <th scope="col">#Id </th>
-                            <th scope="col">Country</th>
-                            <th scope="col">Name </th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Department </th>
+                            <th scope="col">Country </th>
+                            <th scope="col">Date Hire </th>
                             <th scope="col">Manage </th>
                         </tr>
                     </thead>
@@ -52,10 +54,10 @@
                         <tr>
                             <th scope="row">{{ $employee->id }}</th>
                             <td>{{ $employee->country->name }}</td>
-                            <td>{{ $employee->name }}</td>
+                            <td>{{ $employee->first_name }}</td>
                             <td>
                                 <button wire:click="showEditModal({{$employee->id}})" class="btn btn-success">Edit</button>
-                                <button wire:click="deleteState({{$employee->id}})" class="btn btn-danger">Delete</button>
+                                <button wire:click="deleteEmployee({{$employee->id}})" class="btn btn-danger">Delete</button>
                             </td>
                         </tr>
                         @empty
@@ -70,14 +72,14 @@
             {{ $employees->links() }}
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="stateModal" tabindex="-1" aria-labelledby="stateModalLabel" aria-hidden="true">
+        <div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         @if ($editMode)
-                        <h5 class="modal-title" id="stateModalLabel">Edit Employee</h5>
+                        <h5 class="modal-title" id="employeeModalLabel">Edit Employee</h5>
                         @else
-                        <h5 class="modal-title" id="stateModalLabel">Create Employee</h5>
+                        <h5 class="modal-title" id="employeeModalLabel">Create Employee</h5>
                         @endif
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -86,7 +88,63 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-group row">
-                                <label for="countryId" class="col-md-4 col-form-label text-md-right">{{ __('Employee Code')
+                                <label for="lastName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
+                            
+                                <div class="col-md-6">
+                                    <input id="lastName" type="text" class="form-control @error('lastName') is-invalid @enderror" wire:model.defer="lastName"
+                                        value="{{ old('lastName') }}">
+                            
+                                    @error('lastName')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="firstName" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
+                            
+                                <div class="col-md-6">
+                                    <input id="firstName" type="text" class="form-control @error('firstName') is-invalid @enderror"
+                                        wire:model.defer="firstName" value="{{ old('firstName') }}">
+                            
+                                    @error('lastName')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('Middle Name') }}</label>
+                            
+                                <div class="col-md-6">
+                                    <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror"
+                                        wire:model.defer="middleName" value="{{ old('middleName') }}">
+                            
+                                    @error('lastName')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+                            
+                                <div class="col-md-6">
+                                    <input id="address" type="text" class="form-control @error('address') is-invalid @enderror"
+                                        wire:model.defer="address" value="{{ old('address') }}">
+                            
+                                    @error('lastName')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="countryId" class="col-md-4 col-form-label text-md-right">{{ __('Country')
                                     }}</label>
 
                                 <div class="col-md-6">
@@ -104,28 +162,111 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
+                                <label for="stateId" class="col-md-4 col-form-label text-md-right">{{ __('State')
+                                    }}</label>
+                            
                                 <div class="col-md-6">
-                                    <input id="name" type="text"
-                                        class="form-control @error('name') is-invalid @enderror" wire:model.defer="name"
-                                        value="{{ old('name') }}">
-
-                                    @error('name')
+                                    <select wire:model.defer="stateId" class="custom-select custom-select-lg mb-3">
+                                        <option selected>choose</option>
+                                        @foreach(\App\Models\State::all() as $state)
+                                        <option value="{{$state->id}}">{{$state->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('stateId')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label for="cityId" class="col-md-4 col-form-label text-md-right">{{ __('City')
+                                    }}</label>
+                            
+                                <div class="col-md-6">
+                                    <select wire:model.defer="cityId" class="custom-select custom-select-lg mb-3">
+                                        <option selected>choose</option>
+                                        @foreach(\App\Models\City::all() as $city)
+                                        <option value="{{$city->id}}">{{$city->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('cityId')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="departmentId" class="col-md-4 col-form-label text-md-right">{{ __('Department')
+                                    }}</label>
+                            
+                                <div class="col-md-6">
+                                    <select wire:model.defer="departmentId" class="custom-select custom-select-lg mb-3">
+                                        <option selected>choose</option>
+                                        @foreach(\App\Models\Department::all() as $department)
+                                        <option value="{{$department->id}}">{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('departmentId')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="zipCode" class="col-md-4 col-form-label text-md-right">{{ __('Zip Code') }}</label>
+                            
+                                <div class="col-md-6">
+                                    <input id="zipCode" type="text" class="form-control @error('zipCode') is-invalid @enderror"
+                                        wire:model.defer="zipCode" value="{{ old('zipCode') }}">
+                            
+                                    @error('lastName')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="birthDate" class="col-md-4 col-form-label text-md-right">{{ __('Birth Date') }}</label>
+                            
+                                <div class="col-md-6">
+                                    <input id="birthDate" type="text" class="form-control @error('birthDate') is-invalid @enderror"
+                                        wire:model.defer="birthDate" value="{{ old('birthDate') }}">
+                            
+                                    @error('lastName')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="dateHired" class="col-md-4 col-form-label text-md-right">{{ __('Date hired') }}</label>
+                            
+                                <div class="col-md-6">
+                                    <input id="dateHired" type="text" class="form-control @error('dateHired') is-invalid @enderror"
+                                        wire:model.defer="dateHired" value="{{ old('dateHired') }}">
+                            
+                                    @error('lastName')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                            
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         @if($editMode)
-                        <button type="button" class="btn btn-primary" wire:click="updateState()">Update Country</button>
+                        <button type="button" class="btn btn-primary" wire:click="updateEmployee()">Update Country</button>
                         @else
-                        <button type="button" class="btn btn-primary" wire:click="storeState()">Store Country</button>
+                        <button type="button" class="btn btn-primary" wire:click="storeEmployee()">Store Country</button>
 
                         @endif
 
