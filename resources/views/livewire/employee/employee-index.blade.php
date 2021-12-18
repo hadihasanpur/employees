@@ -53,8 +53,10 @@
                         @forelse ($employees as $employee)
                         <tr>
                             <th scope="row">{{ $employee->id }}</th>
-                            <td>{{ $employee->country->name }}</td>
                             <td>{{ $employee->first_name }}</td>
+                            <td>{{ $employee->department->name}}</td>
+                            <td>{{ $employee->country->name }}</td>
+                            <td>{{ $employee->date_hired }}</td>
                             <td>
                                 <button wire:click="showEditModal({{$employee->id}})" class="btn btn-success">Edit</button>
                                 <button wire:click="deleteEmployee({{$employee->id}})" class="btn btn-danger">Delete</button>
@@ -91,7 +93,8 @@
                                 <label for="lastName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
                             
                                 <div class="col-md-6">
-                                    <input id="lastName" type="text" class="form-control @error('lastName') is-invalid @enderror" wire:model.defer="lastName"
+                                    <input id="lastName" type="text" class="form-control @error('lastName') is-invalid @enderror" 
+                                    wire:model.defer="lastName"
                                         value="{{ old('lastName') }}">
                             
                                     @error('lastName')
@@ -108,7 +111,7 @@
                                     <input id="firstName" type="text" class="form-control @error('firstName') is-invalid @enderror"
                                         wire:model.defer="firstName" value="{{ old('firstName') }}">
                             
-                                    @error('lastName')
+                                    @error('firstName')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -122,7 +125,7 @@
                                     <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror"
                                         wire:model.defer="middleName" value="{{ old('middleName') }}">
                             
-                                    @error('lastName')
+                                    @error('middleName')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -136,7 +139,7 @@
                                     <input id="address" type="text" class="form-control @error('address') is-invalid @enderror"
                                         wire:model.defer="address" value="{{ old('address') }}">
                             
-                                    @error('lastName')
+                                    @error('address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -222,7 +225,7 @@
                                     <input id="zipCode" type="text" class="form-control @error('zipCode') is-invalid @enderror"
                                         wire:model.defer="zipCode" value="{{ old('zipCode') }}">
                             
-                                    @error('lastName')
+                                    @error('zipCode')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -236,7 +239,7 @@
                                     <input id="birthDate" type="text" class="form-control @error('birthDate') is-invalid @enderror"
                                         wire:model.defer="birthDate" value="{{ old('birthDate') }}">
                             
-                                    @error('lastName')
+                                    @error('birthDate')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -250,7 +253,7 @@
                                     <input id="dateHired" type="text" class="form-control @error('dateHired') is-invalid @enderror"
                                         wire:model.defer="dateHired" value="{{ old('dateHired') }}">
                             
-                                    @error('lastName')
+                                    @error('dateHired')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

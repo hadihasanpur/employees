@@ -29,14 +29,12 @@ class EmployeeIndex extends Component
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
-    
     'lastName' => 'required',
     'firstName' => 'required',
     'middleName' => 'required',
     'address' => 'required',
-    'countryId' => 'required',
-    'employeeId' => 'required',
     'departmentId' => 'required',
+    'countryId' => 'required',
     'stateId' => 'required',
     'cityId' => 'required',
     'zipCode' => 'required',
@@ -47,7 +45,7 @@ class EmployeeIndex extends Component
     public function loadEmployee()
     {
         $employee = Employee::find($this->employeeId);
-        $this->lasttName = $employee->last_name;
+        $this->lastName = $employee->last_name;
         $this->firstName = $employee->first_name;
         $this->middleName = $employee->middle_name;
         $this->address = $employee->address;
@@ -55,8 +53,7 @@ class EmployeeIndex extends Component
         $this->countryId = $employee->country_id;
         $this->stateId = $employee->state_id;
         $this->cityId = $employee->city_id;
-        $this->zipeCode = $employee->zipe_code;
-        $this->birthDate = $employee->birthdate;
+        $this->zipCode = $employee->zip_code;
         $this->birthDate = $employee->birthdate;
         $this->dateHired = $employee->date_hired;
         }
@@ -85,18 +82,17 @@ class EmployeeIndex extends Component
     {
         $this->validate();
         Employee::create([
-            'lastName' => $this->last_name,
-            'firstName' => $this->first_name,
-            'middleName' => $this->middle_name,
+            'last_name' => $this->lastName,
+            'first_name' => $this->firstName,
+            'middle_name' => $this->middleName,
             'address' => $this->address,
-            'countryId' => $this->country_id,
-            'employeeId' => $this->state_id,
-            'departmentId' => $this->department_id,
-            'stateId' => $this->state_id,
-            'cityId' => $this->city_id,
-            'zipCode' => $this->zip_code,
-            'birthDate' => Carbon::parse($this->birthdate)->format('Y-m-d H:i:s'),
-            'dateHired' => Carbon::parse($this->date_hired)->format('Y-m-d H:i:s'),
+            'country_id' => $this->countryId,
+            'department_id' => $this->departmentId,
+            'state_id' => $this->stateId,
+            'city_id' => $this->cityId,
+            'zip_code' => $this->zipCode,
+            'birthdate' => Carbon::parse($this->birthDate)->format('Y-m-d H:i:s'),
+            'date_hired' => Carbon::parse($this->dateHired)->format('Y-m-d H:i:s'),
         
             ]);
         $this->reset();
@@ -106,12 +102,23 @@ class EmployeeIndex extends Component
 
     public function updateEmployee()
     {
-        $validated = $this->validate([
-            'countryId'  => 'required',
-            'name' => 'required',
+        $this->validate();
+                $employee = Employee::find($this->employeeId);
+
+    
+        $employee->update([
+            'last_name' => $this->lastName,
+            'first_name' => $this->firstName,
+            'middle_name' => $this->middleName,
+            'address' => $this->address,
+            'country_id' => $this->countryId,
+            'department_id' => $this->departmentId,
+            'state_id' => $this->stateId,
+            'city_id' => $this->cityId,
+            'zip_code' => $this->zipCode,
+            'birthdate' => Carbon::parse($this->birthDate)->format('Y-m-d H:i:s'),
+            'date_hired' => Carbon::parse($this->dateHired)->format('Y-m-d H:i:s'),
         ]);
-        $employee = Employee::find($this->employeeId);
-        $employee->update($validated);
         $this->reset();
         $this->dispatchBrowserEvent('modal', ['modalId' => '#employeeModal', 'actionModal' => 'hide']);
         session()->flash('employee_message', 'Employee successfully updated.');
