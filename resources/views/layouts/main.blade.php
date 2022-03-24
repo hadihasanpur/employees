@@ -45,6 +45,17 @@
                 <a class="nav-link" href="{{ route('employee.index') }}">
                     <span>Employee Management</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('uploads') }}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span> upload</span></a>
+            </li>
+            <hr class="sidebar-divider">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('Multiple_uploads') }}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span> Multiple uploads </span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">

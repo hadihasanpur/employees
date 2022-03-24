@@ -29,17 +29,17 @@ class EmployeeIndex extends Component
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
-    'lastName' => 'required',
-    'firstName' => 'required',
-    'middleName' => 'required',
-    'address' => 'required',
+    'lastName'     => 'required',
+    'firstName'    => 'required',
+    'middleName'   => 'required',
+    'address'      => 'required',
     'departmentId' => 'required',
-    'countryId' => 'required',
-    'stateId' => 'required',
-    'cityId' => 'required',
-    'zipCode' => 'required',
-    'birthDate' => 'required',
-    'dateHired' => 'required',
+    'countryId'    => 'required',
+    'stateId'      => 'required',
+    'cityId'       => 'required',
+    'zipCode'      => 'required',
+    'birthDate'    => 'required',
+    'dateHired'    => 'required',
     ];
 
     public function loadEmployee()

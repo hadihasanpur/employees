@@ -7,6 +7,9 @@ use App\Http\Livewire\State\StateIndex;
 use App\Http\Livewire\Country\CountryIndex;
 use App\Http\Livewire\Department\DepartmentIndex;
 use App\Http\Livewire\Employee\EmployeeIndex;
+use App\Http\Livewire\Comments;
+use App\Http\Livewire\Uploads;
+use App\Http\Livewire\Images;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,7 +33,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/countries',CountryIndex::class)->name('country.index');
         Route::get('/departments', DepartmentIndex::class)->name('department.index');
         Route::get('/employees', EmployeeIndex::class)->name('employee.index');
-
-
+    // Route::get('/comments', Comments::class)->name('comments');
+    //Route::get('/upload' , Uploads::class)->name('upload');;  
+    Route::get('/upload' ,Uploads::class)->name('uploads');
+    Route::get('/Multiple_uploads' , Images::class)->name('Multiple_uploads');
+    
 
 });
